@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost Songs Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #songs-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .song {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 560px;
+            width: 100%;
+            position: relative;
+        }
+
+        .song h2 {
+            margin-bottom: 5px;
+        }
+
+        .song p {
+            margin: 5px 0;
+        }
+
+        .status-circle {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .solved .status-circle {
+            background-color: green;
+        }
+
+        .unsolved .status-circle {
+            background-color: red;
+        }
+
+        .partially-solved .status-circle {
+            background-color: blue;
+        }
+
+        .hoax .status-circle {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lost Songs Tracker</h1>
+    </header>
+    <main>
+        <section id="songs-list">
+            <!-- Songs will be dynamically inserted here by JavaScript -->
+        </section>
+    </main>
+    <script>
+        // List of lost songs
+        const songs = [
+            {
+                title: "Waste My Time",
+                artist: "Unknown Artist",
+                description: "A song recorded from a Belarusian radio broadcast.",
+                status: "unsolved",
+                video: '<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/rfLG7ua2gRE?si=dKRA4QRKr1b9jr1l" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+            },
+            {
+                title: "dreams4ever (La Cancion De Alicia)",
+                artist: "Bad Influence",
+                description: 'Posted in a Spanish lost wave Facebook group by user "Jitomate Triste"',
+                status: "solved",
+                video: '<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-9njmpflccQ?si=fvlDWLNdgVuG_daa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+            },
+            {
+                title: "Ulterior Motives",
+                artist: "Christopher and Philip Booth",
+                description: "Found in an adult movie from the '80s.",
+                status: "partially solved",
+                video: '<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/FVV5zFMke3U?si=g-cKbl8dNxdLwL4b" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+            },
+            {
+                title: "Digital Girl",
+                artist: "emails",
+                description: "A song that was later identified as a hoax. emails is also the OP of the song.",
+                status: "hoax",
+                video: '<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/l9fB1Pz8g98?si=KNIcxobXElvcQzLi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+            }
+        ];
+
+        // Function to display songs
+        function displaySongs() {
+            const songsList = document.getElementById('songs-list');
+
+            songs.forEach(song => {
+                const songDiv = document.createElement('div');
+                songDiv.className = `song ${song.status.replace(' ', '-')}`;
+
+                const songTitle = document.createElement('h2');
+                songTitle.textContent = song.title;
+                songDiv.appendChild(songTitle);
+
+                const songArtist = document.createElement('p');
+                songArtist.textContent = `Artist: ${song.artist}`;
+                songDiv.appendChild(songArtist);
+
+                const songDescription = document.createElement('p');
+                songDescription.textContent = song.description;
+                songDiv.appendChild(songDescription);
+
+                const songStatus = document.createElement('p');
+                songStatus.textContent = `Status: ${song.status}`;
+                songDiv.appendChild(songStatus);
+
+                if (song.video) {
+                    const songVideo = document.createElement('div');
+                    songVideo.innerHTML = song.video;
+                    songDiv.appendChild(songVideo);
+                }
+
+                const statusCircle = document.createElement('div');
+                statusCircle.className = 'status-circle';
+                songDiv.appendChild(statusCircle);
+
+                songsList.appendChild(songDiv);
+            });
+        }
+
+        // Call the function to display songs on page load
+        displaySongs();
+    </script>
+</body>
+</html>
